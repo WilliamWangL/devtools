@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="world.title">World Time</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4 text-indigo-600 dark:text-indigo-400">
+                <a href="index.html" class="p-2 -ml-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors" title="Back to Home">
+                    <i data-lucide="arrow-left"></i>
+                </a>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="globe"></i>
+                    <span class="font-bold text-xl text-gray-900 dark:text-white" data-i18n="world.title">World Time</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="toggleTheme()" class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-lg transition-colors" title="Toggle Theme" data-i18n="theme.toggle">
+                    <i data-lucide="sun" class="hidden dark:block"></i>
+                    <i data-lucide="moon" class="block dark:hidden"></i>
+                </button>
+                <button onclick="toggleLanguage()" class="px-3 py-1 text-sm font-medium border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <span id="lang-toggle-text">中文</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="time-cards">
+            <!-- Time cards will be injected by JS -->
+        </div>
+    </main>
+
+    <script src="js/tools/world-time.js"></script>
+</body>
+</html>

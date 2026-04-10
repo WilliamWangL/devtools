@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="timestamp.title">Timestamp Converter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4 text-red-600 dark:text-red-400">
+                <a href="index.html" class="p-2 -ml-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors" title="Back to Home">
+                    <i data-lucide="arrow-left"></i>
+                </a>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="clock"></i>
+                    <span class="font-bold text-xl text-gray-900 dark:text-white" data-i18n="timestamp.title">Timestamp Converter</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="toggleTheme()" class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-lg transition-colors" title="Toggle Theme" data-i18n="theme.toggle">
+                    <i data-lucide="sun" class="hidden dark:block"></i>
+                    <i data-lucide="moon" class="block dark:hidden"></i>
+                </button>
+                <button onclick="toggleLanguage()" class="px-3 py-1 text-sm font-medium border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <span id="lang-toggle-text">中文</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-3xl">
+        <!-- Current Time Panel -->
+        <div class="bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 mb-8 text-center shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2" data-i18n="ts.now">Current Timestamp (s)</h3>
+                    <div class="text-3xl font-mono font-bold text-gray-900 dark:text-white cursor-pointer hover:text-red-600 transition-colors" onclick="copyToClipboard(this.innerText)" id="current-sec" title="Click to copy">
+                        1234567890
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2" data-i18n="ts.now.ms">Current Timestamp (ms)</h3>
+                    <div class="text-3xl font-mono font-bold text-gray-900 dark:text-white cursor-pointer hover:text-red-600 transition-colors" onclick="copyToClipboard(this.innerText)" id="current-ms" title="Click to copy">
+                        1234567890123
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Converter Panel 1: Timestamp to Time -->
+        <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm overflow-hidden mb-6">
+            <div class="bg-gray-50 dark:bg-gray-800/50 px-6 py-3 border-b border-gray-200 dark:border-gray-700">
+                <span class="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider" data-i18n="ts.section.totm">Timestamp to Time</span>
+            </div>
+            <div class="p-6 flex flex-col md:flex-row gap-4 items-center">
+                <input type="text" id="ts-input" class="w-full flex-1 p-3 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none font-mono transition-shadow text-gray-900 dark:text-white" placeholder="1712745600" data-i18n="ts.input.totm">
+                
+                <div class="flex gap-2 w-full md:w-auto">
+                    <button onclick="convertToTime()" class="flex-1 md:flex-none whitespace-nowrap bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-medium transition-transform hover:scale-105 shadow-sm" data-i18n="ts.btn.totm">
+                        Convert to Time
+                    </button>
+                </div>
+            </div>
+            
+            <div id="result-totm" class="hidden border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/30 p-6">
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Local Time</span>
+                        <span class="font-mono text-gray-900 dark:text-white" id="res-totm-local"></span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">UTC / GMT</span>
+                        <span class="font-mono text-gray-900 dark:text-white" id="res-totm-utc"></span>
+                    </div>
+                    <div class="flex justify-between items-center py-2">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">ISO 8601</span>
+                        <span class="font-mono text-gray-900 dark:text-white" id="res-totm-iso"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Converter Panel 2: Time to Timestamp -->
+        <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm overflow-hidden mb-8">
+            <div class="bg-gray-50 dark:bg-gray-800/50 px-6 py-3 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <span class="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider" data-i18n="ts.section.tots">Time to Timestamp</span>
+                <button onclick="fillCurrentTime()" class="text-xs font-medium text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors" data-i18n="ts.btn.now">Current Time</button>
+            </div>
+            <div class="p-6 flex flex-col md:flex-row gap-4 items-center">
+                <input type="text" id="time-input" class="w-full flex-1 p-3 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none font-mono transition-shadow text-gray-900 dark:text-white" placeholder="2026-04-10 12:00:00" data-i18n="ts.input.tots">
+                
+                <div class="flex gap-2 w-full md:w-auto">
+                    <button onclick="convertToTs()" class="flex-1 md:flex-none whitespace-nowrap bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-medium transition-transform hover:scale-105 shadow-sm" data-i18n="ts.btn.tots">
+                        Convert to Timestamp
+                    </button>
+                </div>
+            </div>
+            
+            <div id="result-tots" class="hidden border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/30 p-6">
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Unix Timestamp (s)</span>
+                        <span class="font-mono text-gray-900 dark:text-white" id="res-tots-sec"></span>
+                    </div>
+                    <div class="flex justify-between items-center py-2">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Timestamp (ms)</span>
+                        <span class="font-mono text-gray-900 dark:text-white" id="res-tots-ms"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/tools/timestamp.js"></script>
+</body>
+</html>

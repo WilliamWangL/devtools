@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Toolkit</title>
+    <meta name="description" content="A premium suite of fast, pure, and client-side developer tools.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- I18n & Main Logic -->
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400">
+                <i data-lucide="wrench"></i>
+                <a href="index.html" class="font-bold text-xl text-gray-900 dark:text-white" data-i18n="home.title">DevToolkit</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="toggleTheme()" class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-lg transition-colors" title="Toggle Theme" data-i18n="theme.toggle">
+                    <i data-lucide="sun" class="hidden dark:block"></i>
+                    <i data-lucide="moon" class="block dark:hidden"></i>
+                </button>
+                <button onclick="toggleLanguage()" class="px-3 py-1 text-sm font-medium border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <span id="lang-toggle-text">中文</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-12">
+        <div class="text-center mb-16">
+            <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-4" data-i18n="home.title">Developer Toolkit</h1>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-6" data-i18n="home.subtitle">Curated, high-end, pure HTML/JS tools for modern developers.</p>
+            
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm font-medium border border-green-200 dark:border-green-800 shadow-sm transition-transform hover:scale-105">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+                <span data-i18n="home.privacy">100% Local processing. No data is sent to any server.</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <!-- Tool: JSON -->
+            <a href="json.html" class="tool-card group block p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl">
+                <div class="w-12 h-12 flex items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform">
+                    <i data-lucide="braces"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-i18n="tool.json">JSON Formatter</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm" data-i18n="tool.json.desc">Format, validate and fold JSON data beautifully.</p>
+            </a>
+            
+            <!-- Tool: YAML -->
+            <a href="yaml.html" class="tool-card group block p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl">
+                <div class="w-12 h-12 flex items-center justify-center rounded-xl bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 mb-4 group-hover:scale-110 transition-transform">
+                    <i data-lucide="align-left"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-i18n="tool.yaml">YAML Validator</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm" data-i18n="tool.yaml.desc">Validate and format YAML syntax with folding support.</p>
+            </a>
+
+            <!-- Tool: URL -->
+            <a href="url.html" class="tool-card group block p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl">
+                <div class="w-12 h-12 flex items-center justify-center rounded-xl bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 mb-4 group-hover:scale-110 transition-transform">
+                    <i data-lucide="link"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-i18n="tool.url">URL Encode/Decode</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm" data-i18n="tool.url.desc">Safely encode or decode URL components.</p>
+            </a>
+
+            <!-- Tool: Base64 -->
+            <a href="base64.html" class="tool-card group block p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl">
+                <div class="w-12 h-12 flex items-center justify-center rounded-xl bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 mb-4 group-hover:scale-110 transition-transform">
+                    <i data-lucide="file-code-2"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-i18n="tool.base64">Base64 Encode/Decode</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm" data-i18n="tool.base64.desc">Convert text to and from Base64 encoding.</p>
+            </a>
+
+            <!-- Tool: Timestamp -->
+            <a href="timestamp.html" class="tool-card group block p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl">
+                <div class="w-12 h-12 flex items-center justify-center rounded-xl bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 mb-4 group-hover:scale-110 transition-transform">
+                    <i data-lucide="clock"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-i18n="tool.timestamp">Timestamp Converter</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm" data-i18n="tool.timestamp.desc">Convert Unix timestamps to human readable dates.</p>
+            </a>
+
+            <!-- Tool: MD5 -->
+            <a href="md5.html" class="tool-card group block p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl">
+                <div class="w-12 h-12 flex items-center justify-center rounded-xl bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 mb-4 group-hover:scale-110 transition-transform">
+                    <i data-lucide="hash"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-i18n="tool.md5">MD5 Hash</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm" data-i18n="tool.md5.desc">Generate MD5 hash checksums for any text.</p>
+            </a>
+
+            <!-- Tool: SHA256 -->
+            <a href="sha256.html" class="tool-card group block p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl">
+                <div class="w-12 h-12 flex items-center justify-center rounded-xl bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 mb-4 group-hover:scale-110 transition-transform">
+                    <i data-lucide="shield"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-i18n="tool.sha256">SHA-256 Hash</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm" data-i18n="tool.sha256.desc">Generate secure SHA-256 hash checksums.</p>
+            </a>
+
+            <!-- Tool: Diff -->
+            <a href="diff.html" class="tool-card group block p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl">
+                <div class="w-12 h-12 flex items-center justify-center rounded-xl bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 mb-4 group-hover:scale-110 transition-transform">
+                    <i data-lucide="split-square-horizontal"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-i18n="tool.diff">Text Diff Tool</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm" data-i18n="tool.diff.desc">Compare texts and visualize the differences online.</p>
+            </a>
+
+            <!-- Tool: Password -->
+            <a href="password.html" class="tool-card group block p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl">
+                <div class="w-12 h-12 flex items-center justify-center rounded-xl bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 mb-4 group-hover:scale-110 transition-transform">
+                    <i data-lucide="key"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-i18n="tool.password">Password Generator</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm" data-i18n="tool.password.desc">Generate strong, secure, and random passwords.</p>
+            </a>
+
+            <!-- Tool: Regex -->
+            <a href="regex.html" class="tool-card group block p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl">
+                <div class="w-12 h-12 flex items-center justify-center rounded-xl bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 mb-4 group-hover:scale-110 transition-transform">
+                    <i data-lucide="regex"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-i18n="tool.regex">Regex Tester</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm" data-i18n="tool.regex.desc">Test and validate regular expressions.</p>
+            </a>
+
+            <!-- Tool: World Time -->
+            <a href="world-time.html" class="tool-card group block p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl">
+                <div class="w-12 h-12 flex items-center justify-center rounded-xl bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 mb-4 group-hover:scale-110 transition-transform">
+                    <i data-lucide="globe"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-i18n="tool.worldtime">World Time</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm" data-i18n="tool.worldtime.desc">Check current times across different global timezones.</p>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 dark:border-gray-800 mt-auto">
+        <div class="container mx-auto px-4 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+            &copy; <script>document.write(new Date().getFullYear())</script> DevToolkit. Pure HTML/JS. No backend.
+        </div>
+    </footer>
+</body>
+</html>

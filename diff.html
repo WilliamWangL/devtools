@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="diff.title">Online Text Diff</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <!-- Diff Match Patch -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/diff_match_patch/20121119/diff_match_patch.js"></script>
+    <style>
+        del { background-color: #fca5a5; text-decoration: none; color: #991b1b; }
+        ins { background-color: #bbf7d0; text-decoration: none; color: #166534; }
+        html.dark del { background-color: rgba(153, 27, 27, 0.4); color: #fca5a5; }
+        html.dark ins { background-color: rgba(22, 101, 52, 0.4); color: #bbf7d0; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4 text-yellow-600 dark:text-yellow-400">
+                <a href="index.html" class="p-2 -ml-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors" title="Back to Home">
+                    <i data-lucide="arrow-left"></i>
+                </a>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="split-square-horizontal"></i>
+                    <span class="font-bold text-xl text-gray-900 dark:text-white" data-i18n="diff.title">Text Diff Tool</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="toggleTheme()" class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-lg transition-colors" title="Toggle Theme" data-i18n="theme.toggle">
+                    <i data-lucide="sun" class="hidden dark:block"></i>
+                    <i data-lucide="moon" class="block dark:hidden"></i>
+                </button>
+                <button onclick="toggleLanguage()" class="px-3 py-1 text-sm font-medium border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <span id="lang-toggle-text">中文</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-6 flex flex-col h-[calc(100vh-4rem)]">
+        <div class="flex justify-between items-center mb-4">
+            <button onclick="compareText()" class="flex items-center gap-2 px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors font-medium shadow-sm">
+                <i data-lucide="check-square" class="w-5 h-5"></i>
+                <span data-i18n="diff.btn">Compare Difference</span>
+            </button>
+            <button onclick="clearText()" class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg transition-colors font-medium">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                <span data-i18n="btn.clear">Clear</span>
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-1/2 min-h-[300px] mb-4">
+            <div class="flex flex-col relative h-full">
+                <div class="absolute top-0 right-0 px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-bold uppercase rounded-bl-lg rounded-tr-xl z-10" data-i18n="diff.original">Original</div>
+                <textarea id="text1" class="w-full h-full p-4 pt-8 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-yellow-500 outline-none resize-none font-mono text-sm shadow-sm text-gray-900 dark:text-white" placeholder="Paste original text here..."></textarea>
+            </div>
+            <div class="flex flex-col relative h-full">
+                <div class="absolute top-0 right-0 px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-bold uppercase rounded-bl-lg rounded-tr-xl z-10" data-i18n="diff.modified">Modified</div>
+                <textarea id="text2" class="w-full h-full p-4 pt-8 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-yellow-500 outline-none resize-none font-mono text-sm shadow-sm text-gray-900 dark:text-white" placeholder="Paste modified text here..."></textarea>
+            </div>
+        </div>
+
+        <div class="flex-grow bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm overflow-auto p-6 font-mono text-sm leading-relaxed whitespace-pre-wrap text-gray-900 dark:text-gray-100" id="diff-output">
+            <!-- Diff result will appear here -->
+        </div>
+    </main>
+
+    <script src="js/tools/diff.js"></script>
+</body>
+</html>

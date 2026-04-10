@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #111827;
+  --border-color: #e5e7eb;
+}
+
+html.dark {
+  --bg-color: #111827;
+  --text-color: #f9fafb;
+  --border-color: #374151;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Tool Card Hover Effect */
+.tool-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.tool-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+html.dark .tool-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+.editor-container {
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* Custom Indent Guides for Ace Editor */
+.ace_editor .ace_indent-guide {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAECAYAAABP2FU6AAAAEElEQVQImWP4//8/AwMDAwALMgL1q4s5KwAAAABJRU5ErkJggg==") right repeat-y !important;
+}
+html.dark .ace_editor .ace_indent-guide {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAECAYAAABP2FU6AAAAEElEQVQImWNgYGD4z8DAAAADAwABCwHqLwAAAABJRU5ErkJggg==") right repeat-y !important;
+}
+
+/* Top-level (indent 0) reference line */
+.ace_editor .ace_text-layer {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAECAYAAABP2FU6AAAAEElEQVQImWP4//8/AwMDAwALMgL1q4s5KwAAAABJRU5ErkJggg==") left repeat-y !important;
+}
+html.dark .ace_editor .ace_text-layer {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAECAYAAABP2FU6AAAAEElEQVQImWNgYGD4z8DAAAADAwABCwHqLwAAAABJRU5ErkJggg==") left repeat-y !important;
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="regex.title">Regex Tester</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <style>
+        .highlight-match {
+            background-color: #fde047; /* yellow-300 */
+            color: #854d0e; /* yellow-800 */
+            border-radius: 0.125rem;
+            box-shadow: 0 0 0 1px #fef08a; /* yellow-200 */
+        }
+        html.dark .highlight-match {
+            background-color: rgba(234, 179, 8, 0.4);
+            color: #fde047;
+            box-shadow: 0 0 0 1px rgba(234, 179, 8, 0.5);
+        }
+        .highlight-group {
+            border-bottom: 2px solid #3b82f6; /* blue-500 */
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4 text-rose-600 dark:text-rose-400">
+                <a href="index.html" class="p-2 -ml-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors" title="Back to Home">
+                    <i data-lucide="arrow-left"></i>
+                </a>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="regex"></i>
+                    <span class="font-bold text-xl text-gray-900 dark:text-white" data-i18n="regex.title">Regex Tester</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="toggleTheme()" class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-lg transition-colors" title="Toggle Theme" data-i18n="theme.toggle">
+                    <i data-lucide="sun" class="hidden dark:block"></i>
+                    <i data-lucide="moon" class="block dark:hidden"></i>
+                </button>
+                <button onclick="toggleLanguage()" class="px-3 py-1 text-sm font-medium border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <span id="lang-toggle-text">中文</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
+        <div class="flex flex-col gap-6">
+            
+            <!-- Pattern & Flags Input -->
+            <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm">
+                <div class="flex flex-col md:flex-row gap-4 items-end">
+                    <div class="flex-1 w-full relative">
+                        <label for="regex-pattern" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-i18n="regex.pattern">Regular Expression</label>
+                        <div class="relative flex items-center">
+                            <span class="absolute left-4 text-gray-400 font-mono text-lg">/</span>
+                            <input type="text" id="regex-pattern" class="w-full pl-8 pr-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none font-mono text-gray-900 dark:text-white transition-shadow" placeholder="pattern" oninput="testRegex()">
+                            <span class="absolute right-4 text-gray-400 font-mono text-lg">/</span>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-32 relative">
+                        <label for="regex-flags" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-i18n="regex.flags">Flags</label>
+                        <input type="text" id="regex-flags" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none font-mono text-gray-900 dark:text-white transition-shadow" value="g" placeholder="gmi" oninput="testRegex()">
+                    </div>
+                </div>
+                <div id="regex-error" class="hidden mt-3 text-sm text-red-500 flex items-center gap-1 font-medium">
+                    <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                    <span class="err-msg"></span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[500px]">
+                <!-- Test String Input -->
+                <div class="flex flex-col relative">
+                    <label for="test-string" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-i18n="regex.text">Test String</label>
+                    <textarea id="test-string" class="w-full flex-grow p-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-shadow outline-none resize-none font-mono text-sm shadow-sm text-gray-900 dark:text-gray-100" placeholder="Type text here to match..." oninput="testRegex()"></textarea>
+                    <button onclick="clearTestString()" class="absolute top-10 right-4 p-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-lg transition-colors" title="Clear">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Match Results -->
+                <div class="flex flex-col relative">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-i18n="regex.result">Match Results</label>
+                        <span id="match-count" class="text-xs font-bold text-rose-600 dark:text-rose-400 bg-rose-100 dark:bg-rose-900/30 px-2 py-0.5 rounded-full hidden">0</span>
+                    </div>
+                    
+                    <div class="w-full flex-grow bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-4 shadow-sm overflow-auto font-mono text-sm leading-relaxed whitespace-pre-wrap text-gray-900 dark:text-gray-100" id="match-output">
+                        <!-- Highlighting will be done here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Extracted Groups -->
+            <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm overflow-hidden hidden" id="groups-panel">
+                <div class="bg-gray-50 dark:bg-gray-800/50 px-6 py-3 border-b border-gray-200 dark:border-gray-700">
+                    <span class="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider" data-i18n="regex.result">Matches & Groups</span>
+                </div>
+                <div class="p-6 overflow-auto max-h-[400px]">
+                    <table class="w-full text-sm text-left">
+                        <tbody id="groups-output" class="divide-y divide-gray-200 dark:divide-gray-800">
+                            <!-- Match data injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/tools/regex.js"></script>
+</body>
+</html>
