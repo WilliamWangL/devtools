@@ -22,6 +22,8 @@ const translations = {
     'tool.yaml.desc': 'YAML 格式化与语法校验',
     'tool.xml': 'XML 校验',
     'tool.xml.desc': 'XML 格式化与语法校验',
+    'tool.redirect': '重定向检查',
+    'tool.redirect.desc': '追踪 HTTP 重定向链和状态码',
     'tool.md5': 'MD5 生成',
     'tool.md5.desc': '计算文本的 MD5 哈希值',
     'tool.sha256': 'SHA256 生成',
@@ -60,6 +62,13 @@ const translations = {
     'xml.title': 'XML 校验与格式化',
     'xml.input': '在此粘贴 XML...',
     'xml.page.desc': '粘贴 XML 数据进行校验和美化缩进格式化。',
+    
+    // Redirect Checker Tool
+    'redirect.title': '重定向检查',
+    'redirect.input': '输入要检查的 URL',
+    'redirect.btn': '检查重定向',
+    'redirect.result': '重定向链',
+    'redirect.page.desc': '追踪任意 URL 的 HTTP 重定向链。结果可能受浏览器 CORS 策略限制。',
     
     // URL Tool
     'url.title': 'URL 编码 / 解码',
