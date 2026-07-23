@@ -22,8 +22,8 @@ const translations = {
     'tool.yaml.desc': 'YAML 格式化与语法校验',
     'tool.xml': 'XML 校验',
     'tool.xml.desc': 'XML 格式化与语法校验',
-    'tool.redirect': '重定向检查',
-    'tool.redirect.desc': '追踪 HTTP 重定向链和状态码',
+    'tool.cron': 'Cron 表达式生成',
+    'tool.cron.desc': '可视化生成 Cron 表达式并预览下次执行时间',
     'tool.md5': 'MD5 生成',
     'tool.md5.desc': '计算文本的 MD5 哈希值',
     'tool.sha256': 'SHA256 生成',
@@ -63,12 +63,28 @@ const translations = {
     'xml.input': '在此粘贴 XML...',
     'xml.page.desc': '粘贴 XML 数据进行校验和美化缩进格式化。',
     
-    // Redirect Checker Tool
-    'redirect.title': '重定向检查',
-    'redirect.input': '输入要检查的 URL',
-    'redirect.btn': '检查重定向',
-    'redirect.result': '重定向链',
-    'redirect.page.desc': '追踪任意 URL 的 HTTP 重定向链。结果可能受浏览器 CORS 策略限制。',
+    // Cron Expression Generator Tool
+    'cron.title': 'Cron 表达式生成器',
+    'cron.page.desc': '可视化构建 Cron 表达式并预览未来执行时间。',
+    'cron.result': 'Cron 表达式',
+    'cron.next': '下次执行时间',
+    'cron.freq.minute': '每分钟',
+    'cron.freq.hourly': '每小时',
+    'cron.freq.daily': '每天',
+    'cron.freq.weekly': '每周',
+    'cron.freq.monthly': '每月',
+    'cron.freq.yearly': '每年',
+    'cron.freq.custom': '自定义',
+    'cron.opt.interval': '间隔',
+    'cron.opt.minute': '分钟',
+    'cron.opt.minutes': '分钟',
+    'cron.opt.hours': '小时',
+    'cron.opt.days': '天',
+    'cron.opt.day': '日期',
+    'cron.opt.month': '月份',
+    'cron.opt.at': '时间',
+    'cron.custom': '自定义表达式',
+    'cron.custom.hint': '格式：分钟 小时 日 月 星期',
     
     // URL Tool
     'url.title': 'URL 编码 / 解码',
@@ -152,6 +168,7 @@ function setLanguage(lang) {
   currentLang = lang;
   localStorage.setItem('lang', lang);
   document.documentElement.lang = lang;
+  window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
   
   if (lang === 'zh') {
     document.querySelectorAll('[data-i18n]').forEach(el => {

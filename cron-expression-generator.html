@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="cron.title">Cron Expression Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4 text-violet-600 dark:text-violet-400">
+                <a href="index.html" class="p-2 -ml-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors" title="Back to Home">
+                    <i data-lucide="arrow-left"></i>
+                </a>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="calendar-clock"></i>
+                    <span class="font-bold text-xl text-gray-900 dark:text-white" data-i18n="cron.title">Cron Expression Generator</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="toggleTheme()" class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-lg transition-colors" title="Toggle Theme" data-i18n="theme.toggle">
+                    <i data-lucide="sun" class="hidden dark:block"></i>
+                    <i data-lucide="moon" class="block dark:hidden"></i>
+                </button>
+                <button onclick="toggleLanguage()" class="px-3 py-1 text-sm font-medium border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <span id="lang-toggle-text">中文</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-3xl">
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-6" data-i18n="cron.page.desc">Build cron expressions visually and preview the next scheduled times.</p>
+
+        <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-sm p-6 md:p-8">
+            <!-- Frequency Tabs -->
+            <div class="flex flex-wrap gap-2 mb-6" id="frequency-tabs">
+                <button type="button" data-freq="minute" class="freq-tab px-4 py-2 rounded-xl text-sm font-medium transition-colors bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300" data-i18n="cron.freq.minute">Every Minute</button>
+                <button type="button" data-freq="hourly" class="freq-tab px-4 py-2 rounded-xl text-sm font-medium transition-colors bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700" data-i18n="cron.freq.hourly">Hourly</button>
+                <button type="button" data-freq="daily" class="freq-tab px-4 py-2 rounded-xl text-sm font-medium transition-colors bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700" data-i18n="cron.freq.daily">Daily</button>
+                <button type="button" data-freq="weekly" class="freq-tab px-4 py-2 rounded-xl text-sm font-medium transition-colors bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700" data-i18n="cron.freq.weekly">Weekly</button>
+                <button type="button" data-freq="monthly" class="freq-tab px-4 py-2 rounded-xl text-sm font-medium transition-colors bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700" data-i18n="cron.freq.monthly">Monthly</button>
+                <button type="button" data-freq="yearly" class="freq-tab px-4 py-2 rounded-xl text-sm font-medium transition-colors bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700" data-i18n="cron.freq.yearly">Yearly</button>
+                <button type="button" data-freq="custom" class="freq-tab px-4 py-2 rounded-xl text-sm font-medium transition-colors bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700" data-i18n="cron.freq.custom">Custom</button>
+            </div>
+
+            <!-- Options Panel -->
+            <div id="options-panel" class="space-y-5 mb-8">
+                <!-- Dynamic options injected here -->
+            </div>
+
+            <!-- Output -->
+            <div class="relative mb-6 group">
+                <div class="flex items-center justify-between mb-2">
+                    <label class="text-sm font-medium text-gray-700 dark:text-gray-300" data-i18n="cron.result">Cron Expression</label>
+                    <span id="cron-desc" class="text-xs text-gray-500 dark:text-gray-400"></span>
+                </div>
+                <div class="relative">
+                    <input type="text" id="cron-output" readonly class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-4 pr-14 font-mono text-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none" value="* * * * *">
+                    <button onclick="copyCron()" class="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-gray-500 hover:text-violet-600 dark:text-gray-400 dark:hover:text-violet-400 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" title="COPY">
+                        <i data-lucide="copy" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Next Executions -->
+            <div class="bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-2xl p-5">
+                <h3 class="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-3" data-i18n="cron.next">Next Execution Times</h3>
+                <ul id="next-runs" class="space-y-2">
+                    <!-- injected -->
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/tools/cron-expression-generator.js"></script>
+</body>
+</html>
