@@ -47,8 +47,29 @@ async function copyToClipboard(text) {
   }
 }
 
+// Tip Footer Bar
+function injectTipFooter() {
+  const isZh = currentLang === 'zh';
+  const text = isZh ? '觉得好用？请我喝杯咖啡 ☕' : 'Enjoying these tools? Buy me a coffee ☕';
+  const btnText = isZh ? '打赏' : 'Tip';
+  
+  const footer = document.createElement('div');
+  footer.className = 'w-full border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50';
+  footer.innerHTML = `
+    <div class="container mx-auto px-4 py-3 flex flex-wrap items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+      <span>${text}</span>
+      <a href="https://paypal.me/willliam789" target="_blank" rel="noopener noreferrer"
+         class="inline-flex items-center gap-1.5 px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white text-xs font-medium rounded-md transition-colors">
+        ☕ ${btnText}
+      </a>
+    </div>
+  `;
+  document.body.appendChild(footer);
+}
+
 // Initialize on load
 initTheme();
 document.addEventListener('DOMContentLoaded', () => {
   lucide.createIcons(); // Initialize Lucide icons
+  injectTipFooter(); // Inject tip bar at bottom
 });
