@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://devtools.ecommica.com//sitemap.xml
+Sitemap: https://devtools.ecommica.com/sitemap.xml
