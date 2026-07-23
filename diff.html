@@ -47,7 +47,8 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-4 py-6 flex flex-col h-[calc(100vh-4rem)]">
+    <main class="flex-grow container mx-auto px-4 py-6 flex flex-col min-h-[calc(100vh-4rem)]">
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3" data-i18n="diff.page.desc">Compare two texts side by side and highlight the differences.</p>
         <div class="flex justify-between items-center mb-4">
             <button onclick="compareText()" class="flex items-center gap-2 px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors font-medium shadow-sm">
                 <i data-lucide="check-square" class="w-5 h-5"></i>
