@@ -39,10 +39,10 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-4 py-6 flex flex-col max-w-4xl min-h-[calc(100vh-4rem)]">
-        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3" data-i18n="redirect.page.desc">Trace HTTP redirect chains for any URL. Results may be limited by browser CORS policy.</p>
+    <main class="flex-grow container mx-auto px-4 py-6 flex flex-col max-w-5xl min-h-[calc(100vh-4rem)]">
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4" data-i18n="redirect.page.desc">Trace HTTP redirect chains for any URL. Results may be limited by browser CORS policy.</p>
 
-        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm mb-6">
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-5 shadow-sm mb-6">
             <label for="url-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-i18n="redirect.input">Enter URL to check</label>
             <div class="flex flex-col sm:flex-row gap-3">
                 <input type="text" id="url-input" class="flex-1 px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none font-mono text-sm text-gray-900 dark:text-white" placeholder="https://example.com">
@@ -53,12 +53,12 @@
             </div>
         </div>
 
-        <div id="result-area" class="hidden">
-            <div class="flex items-center justify-between mb-3">
+        <div id="result-area" class="hidden space-y-4">
+            <div class="flex items-center justify-between">
                 <h2 class="text-lg font-semibold text-gray-900 dark:text-white" data-i18n="redirect.result">Redirect Chain</h2>
-                <span id="redirect-count" class="text-xs font-medium px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-md text-gray-600 dark:text-gray-300"></span>
+                <span id="redirect-summary" class="text-xs font-medium px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-gray-600 dark:text-gray-300"></span>
             </div>
-            <div id="chain-container" class="space-y-3"></div>
+            <div id="chain-container" class="space-y-4"></div>
         </div>
 
         <div id="error-area" class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-700 dark:text-red-400 text-sm"></div>
