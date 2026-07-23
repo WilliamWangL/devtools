@@ -41,6 +41,7 @@
 
     <!-- Main Content -->
     <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl">
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4" data-i18n="sha256.page.desc">Generate secure SHA-256 hash for any text input.</p>
         <div class="flex flex-col gap-6">
             <div class="flex flex-col relative">
                 <label for="input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Input Text</label>
@@ -54,7 +55,7 @@
                 <div class="flex justify-between items-center mb-3">
                     <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider" data-i18n="hash.result">SHA-256 Hash</label>
                     <button onclick="copyOutput()" class="flex items-center gap-1 text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 font-medium text-sm transition-colors">
-                        <i data-lucide="copy" class="w-4 h-4"></i> <span data-i18n="btn.copy">Copy</span>
+                        <i data-lucide="copy" class="w-4 h-4"></i> <span data-i18n="btn.copy">COPY</span>
                     </button>
                 </div>
                 <div class="p-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg break-all font-mono text-lg text-gray-900 dark:text-gray-100 shadow-inner" id="output">

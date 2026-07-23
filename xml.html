@@ -44,7 +44,8 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-4 py-6 flex flex-col h-[calc(100vh-4rem)]">
+    <main class="flex-grow container mx-auto px-4 py-6 flex flex-col min-h-[calc(100vh-4rem)]">
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3" data-i18n="xml.page.desc">Paste XML to validate and pretty-print with proper indentation.</p>
         <div class="flex flex-wrap items-center gap-3 mb-4">
             <button onclick="validateXml()" class="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors font-medium">
                 <i data-lucide="check-circle" class="w-4 h-4"></i>
@@ -53,7 +54,7 @@
             <div class="h-6 w-px bg-gray-300 dark:bg-gray-700 mx-2"></div>
             <button onclick="copyOutput()" class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg transition-colors font-medium">
                 <i data-lucide="copy" class="w-4 h-4"></i>
-                <span data-i18n="btn.copy">Copy</span>
+                <span data-i18n="btn.copy">COPY</span>
             </button>
             <button onclick="clearEditor()" class="flex items-center gap-2 px-4 py-2 bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 rounded-lg transition-colors font-medium ml-auto">
                 <i data-lucide="trash-2" class="w-4 h-4"></i>
