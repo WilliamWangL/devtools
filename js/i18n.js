@@ -20,6 +20,8 @@ const translations = {
     'tool.base64.desc': '对文本进行 Base64 编码或解码',
     'tool.yaml': 'YAML 校验',
     'tool.yaml.desc': 'YAML 格式化与语法校验',
+    'tool.xml': 'XML 校验',
+    'tool.xml.desc': 'XML 格式化与语法校验',
     'tool.md5': 'MD5 生成',
     'tool.md5.desc': '计算文本的 MD5 哈希值',
     'tool.sha256': 'SHA256 生成',
@@ -51,6 +53,10 @@ const translations = {
     // YAML Tool
     'yaml.title': 'YAML 校验与格式化',
     'yaml.input': '在此粘贴 YAML...',
+    
+    // XML Tool
+    'xml.title': 'XML 校验与格式化',
+    'xml.input': '在此粘贴 XML...',
     
     // URL Tool
     'url.title': 'URL 编码 / 解码',
