@@ -45,42 +45,368 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-4 py-6 flex flex-col min-h-[calc(100vh-4rem)]">
-        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3" data-i18n="yaml.page.desc">Validate YAML online instantly. Check YAML syntax errors, formatting issues and invalid indentation. Free developer tool with no file upload required.</p>
+   <main class="flex-grow container mx-auto px-4 py-8">
+
+
+    <!-- SEO Header -->
+
+    <section class="mb-6">
+
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+            Free Online YAML Validator
+        </h1>
+
+
+        <p class="mt-3 text-gray-600 dark:text-gray-300">
+
+            Validate YAML online instantly.
+            Check YAML syntax errors, indentation issues and formatting problems.
+            This free YAML Validator runs directly in your browser.
+
+        </p>
+
+
+    </section>
+
+
+
+
+
+    <!-- TOOL AREA -->
+
+
+    <section>
+
+
         <div class="flex flex-wrap items-center gap-3 mb-4">
-            <button onclick="validateYaml()" class="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors font-medium">
-                <i data-lucide="check-circle" class="w-4 h-4"></i>
-                <span data-i18n="btn.format">Format & Validate</span>
+
+
+            <button onclick="validateYaml()"
+                    class="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg">
+
+                <i data-lucide="check-circle"></i>
+
+                Format & Validate
+
             </button>
-            <div class="h-6 w-px bg-gray-300 dark:bg-gray-700 mx-2"></div>
-            <button onclick="copyOutput()" class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg transition-colors font-medium">
-                <i data-lucide="copy" class="w-4 h-4"></i>
-                <span data-i18n="btn.copy">COPY</span>
+
+
+
+            <button onclick="copyOutput()"
+                    class="px-4 py-2 bg-gray-100 rounded-lg">
+
+                Copy Output
+
             </button>
-            <button onclick="clearEditor()" class="flex items-center gap-2 px-4 py-2 bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 rounded-lg transition-colors font-medium ml-auto">
-                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                <span data-i18n="btn.clear">Clear</span>
+
+
+
+            <button onclick="clearEditor()"
+                    class="px-4 py-2 bg-red-100 text-red-600 rounded-lg ml-auto">
+
+                Clear
+
             </button>
+
+
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-grow min-h-0">
-            <!-- Left Pane: Input -->
-            <div class="flex flex-col h-full editor-container">
-                <div class="bg-gray-50 dark:bg-gray-800/50 px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-                    <span class="text-sm font-medium text-gray-600 dark:text-gray-400">YAML Input</span>
-                    <span id="yaml-status" class="text-xs font-medium"></span>
+
+
+
+
+        <!-- 保留左右布局 -->
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+
+
+            <!-- INPUT -->
+
+            <div class="border rounded-xl overflow-hidden bg-white dark:bg-gray-900">
+
+
+                <div class="px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b">
+
+<span class="font-medium">
+YAML Input
+</span>
+
+
                 </div>
-                <div id="editor-input" class="flex-grow w-full h-full relative min-h-[300px]"></div>
-            </div>
-            <!-- Right Pane: Output (JSON view of YAML) -->
-            <div class="flex flex-col h-full editor-container">
-                <div class="bg-gray-50 dark:bg-gray-800/50 px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-                    <span class="text-sm font-medium text-gray-600 dark:text-gray-400">YAML Output (Parsed)</span>
+
+
+                <div id="editor-input"
+                     class="h-[500px]">
                 </div>
-                <div id="editor-output" class="flex-grow w-full h-full relative min-h-[300px]"></div>
+
+
             </div>
+
+
+
+
+
+            <!-- OUTPUT -->
+
+            <div class="border rounded-xl overflow-hidden bg-white dark:bg-gray-900">
+
+
+                <div class="px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b">
+
+<span class="font-medium">
+JSON Output (Parsed)
+</span>
+
+                </div>
+
+
+                <div id="editor-output"
+                     class="h-[500px]">
+                </div>
+
+
+            </div>
+
+
+
         </div>
-    </main>
+
+
+    </section>
+
+
+
+
+
+
+
+    <!-- SEO CONTENT -->
+
+
+    <section class="mt-16 prose max-w-none dark:prose-invert">
+
+
+        <h2>
+            What is a YAML Validator?
+        </h2>
+
+
+        <p>
+
+            A YAML Validator is an online developer tool that checks whether YAML files are correctly formatted.
+
+            YAML is widely used for configuration files in Kubernetes,
+            Docker Compose,
+            GitHub Actions,
+            CI/CD pipelines and software projects.
+
+        </p>
+
+
+
+        <h2>
+            How to Validate YAML Online?
+        </h2>
+
+
+        <ol>
+
+            <li>
+                Paste your YAML content into the left editor.
+            </li>
+
+
+            <li>
+                Click "Format & Validate".
+            </li>
+
+
+            <li>
+                Review syntax errors and the parsed JSON output.
+            </li>
+
+
+        </ol>
+
+
+
+
+        <h2>
+            YAML Validation Example
+        </h2>
+
+
+
+        <h3>
+            Valid YAML
+        </h3>
+
+
+        <pre>
+app:
+  name: demo
+  port: 8080
+
+database:
+  host: localhost
+</pre>
+
+
+
+
+        <h3>
+            Invalid YAML
+        </h3>
+
+
+        <pre>
+app:
+ name demo
+ port 8080
+</pre>
+
+
+
+        <p>
+
+            Common YAML errors include incorrect indentation,
+            missing colons,
+            invalid lists and incorrect quotation marks.
+
+        </p>
+
+
+
+
+
+        <h2>
+            Why Use This YAML Validator?
+        </h2>
+
+
+        <ul>
+
+            <li>
+                Free online YAML validation
+            </li>
+
+            <li>
+                No file upload required
+            </li>
+
+            <li>
+                Fast browser-based processing
+            </li>
+
+            <li>
+                Instant YAML syntax checking
+            </li>
+
+
+        </ul>
+
+
+
+
+
+        <h2>
+            Frequently Asked Questions
+        </h2>
+
+
+
+        <h3>
+            How do I check if YAML is valid?
+        </h3>
+
+        <p>
+            Paste your YAML content into the validator and run the validation process.
+            The tool will detect syntax errors automatically.
+        </p>
+
+
+
+
+        <h3>
+            Is this YAML Validator free?
+        </h3>
+
+        <p>
+            Yes. This YAML Validator is free and works directly in your browser.
+        </p>
+
+
+
+        <h3>
+            Does this tool store my YAML data?
+        </h3>
+
+        <p>
+            No. YAML parsing happens locally in your browser.
+            Your content is not uploaded.
+        </p>
+
+
+
+    </section>
+
+
+
+
+
+    <!-- Related Tools -->
+
+
+    <section class="mt-12">
+
+
+        <h2 class="text-2xl font-bold">
+
+            Related Developer Tools
+
+        </h2>
+
+
+
+        <div class="grid md:grid-cols-3 gap-4 mt-5">
+
+
+            <a href="/password.html"
+               class="border rounded-lg p-4 hover:bg-gray-50">
+
+                JSON Validator
+
+            </a>
+
+
+
+            <a href="/json.html"
+               class="border rounded-lg p-4 hover:bg-gray-50">
+
+                JSON Formatter
+
+            </a>
+
+
+
+
+            <a href="/timestamp.html"
+               class="border rounded-lg p-4 hover:bg-gray-50">
+
+                Timestamp Converter
+
+            </a>
+
+
+
+        </div>
+
+
+    </section>
+
+
+
+</main>
 
     <script src="js/tools/yaml.js"></script>
 </body>
