@@ -3,559 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title data-i18n="yaml.title">
-        Free Online YAML Validator - Check YAML Syntax Errors
-    </title>
-
-    <meta name="description"
-          content="Free online YAML Validator. Validate YAML syntax, detect indentation errors, and convert YAML to JSON instantly in your browser.">
-
-
+    <title data-i18n="yaml.title">Free Online YAML Validator - Check YAML Syntax Errors</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
     <script>
-        tailwind.config = {
-            darkMode:'class',
-            theme:{
-                extend:{
-                    fontFamily:{
-                        sans:['Inter','sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } }
     </script>
-
-
     <link rel="stylesheet" href="css/style.css">
-
     <script src="https://unpkg.com/lucide@latest"></script>
-
     <script src="js/i18n.js"></script>
     <script src="js/main.js"></script>
-
-
+    <!-- Ace Editor & JS-YAML -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.7/ace.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
-
-
     <style>
-        .ace_editor {
-            font-family:'JetBrains Mono','Fira Code',Consolas,monospace!important;
-            font-size:14px;
-        }
-
-        .seo-card{
-            @apply bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl;
-        }
+        .ace_editor { font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace !important; font-size: 14px; }
     </style>
-
 </head>
-
-
-<body class="min-h-screen flex flex-col antialiased bg-gray-50 dark:bg-gray-950">
-
-
-
-<!-- Header -->
-<header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800
-bg-white/80 dark:bg-gray-900/80 backdrop-blur">
-
-    <div class="container mx-auto px-4 h-16 flex items-center justify-between">
-
-
-        <div class="flex items-center gap-4 text-orange-600">
-
-            <a href="index.html"
-               class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-
-                <i data-lucide="arrow-left"></i>
-
-            </a>
-
-
-            <div class="flex items-center gap-2">
-
-                <i data-lucide="align-left"></i>
-
-                <span class="font-bold text-xl text-gray-900 dark:text-white"
-                      data-i18n="yaml.title">
-YAML Validator
-</span>
-
+<body class="min-h-screen flex flex-col antialiased">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4 text-orange-600 dark:text-orange-400">
+                <a href="index.html" class="p-2 -ml-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors" title="Back to Home">
+                    <i data-lucide="arrow-left"></i>
+                </a>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="align-left"></i>
+                    <span class="font-bold text-xl text-gray-900 dark:text-white" data-i18n="yaml.title">YAML Validator</span>
+                </div>
             </div>
-
-
+            <div class="flex items-center gap-4">
+                <button onclick="toggleTheme()" class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-lg transition-colors" title="Toggle Theme" data-i18n="theme.toggle">
+                    <i data-lucide="sun" class="hidden dark:block"></i>
+                    <i data-lucide="moon" class="block dark:hidden"></i>
+                </button>
+                <button onclick="toggleLanguage()" class="px-3 py-1 text-sm font-medium border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <span id="lang-toggle-text">中文</span>
+                </button>
+            </div>
         </div>
+    </header>
 
-
-
-        <div class="flex items-center gap-4">
-
-
-            <button onclick="toggleTheme()"
-                    class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400">
-
-                <i data-lucide="sun" class="hidden dark:block"></i>
-                <i data-lucide="moon" class="dark:hidden"></i>
-
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-6 flex flex-col min-h-[calc(100vh-4rem)]">
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3" data-i18n="yaml.page.desc">Paste YAML to validate, format and convert to JSON.</p>
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+            <button onclick="validateYaml()" class="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors font-medium">
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                <span data-i18n="btn.format">Format & Validate</span>
             </button>
-
-
-
-            <button onclick="toggleLanguage()"
-                    class="px-3 py-1 text-sm border border-gray-300 dark:border-gray-700 rounded-md">
-
-<span id="lang-toggle-text">
-中文
-</span>
-
+            <div class="h-6 w-px bg-gray-300 dark:bg-gray-700 mx-2"></div>
+            <button onclick="copyOutput()" class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg transition-colors font-medium">
+                <i data-lucide="copy" class="w-4 h-4"></i>
+                <span data-i18n="btn.copy">COPY</span>
             </button>
-
-
+            <button onclick="clearEditor()" class="flex items-center gap-2 px-4 py-2 bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 rounded-lg transition-colors font-medium ml-auto">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                <span data-i18n="btn.clear">Clear</span>
+            </button>
         </div>
 
-
-    </div>
-
-</header>
-
-
-
-
-
-<!-- TOOL AREA -->
-
-<main class="flex-grow container mx-auto px-4 py-6">
-
-
-
-    <p class="text-sm text-gray-500 dark:text-gray-400 mb-3"
-       data-i18n="yaml.page.desc">
-
-        Validate YAML online instantly. Check YAML syntax errors,
-        formatting issues and invalid indentation.
-
-    </p>
-
-
-
-
-    <div class="flex flex-wrap items-center gap-3 mb-4">
-
-
-        <button onclick="validateYaml()"
-                class="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg">
-
-            <i data-lucide="check-circle" class="w-4 h-4"></i>
-
-            <span data-i18n="btn.format">
-Format & Validate
-</span>
-
-        </button>
-
-
-
-
-        <button onclick="copyOutput()"
-                class="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
-
-            <i data-lucide="copy" class="w-4 h-4"></i>
-
-            COPY
-
-        </button>
-
-
-
-        <button onclick="clearEditor()"
-                class="ml-auto flex items-center gap-2 px-4 py-2 bg-red-100 dark:bg-red-900/30 text-red-600 rounded-lg">
-
-            <i data-lucide="trash-2" class="w-4 h-4"></i>
-
-            Clear
-
-        </button>
-
-
-
-    </div>
-
-
-
-
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 h-[600px]">
-
-
-        <!-- INPUT -->
-
-        <div class="flex flex-col editor-container">
-
-            <div class="bg-gray-50 dark:bg-gray-800 px-4 py-2 border-b border-gray-200 dark:border-gray-700">
-
-                YAML Input
-
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-grow min-h-0">
+            <!-- Left Pane: Input -->
+            <div class="flex flex-col h-full editor-container">
+                <div class="bg-gray-50 dark:bg-gray-800/50 px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                    <span class="text-sm font-medium text-gray-600 dark:text-gray-400">YAML Input</span>
+                    <span id="yaml-status" class="text-xs font-medium"></span>
+                </div>
+                <div id="editor-input" class="flex-grow w-full h-full relative min-h-[300px]"></div>
             </div>
-
-
-            <div id="editor-input"
-                 class="flex-grow">
+            <!-- Right Pane: Output (JSON view of YAML) -->
+            <div class="flex flex-col h-full editor-container">
+                <div class="bg-gray-50 dark:bg-gray-800/50 px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                    <span class="text-sm font-medium text-gray-600 dark:text-gray-400">JSON Output (Parsed)</span>
+                </div>
+                <div id="editor-output" class="flex-grow w-full h-full relative min-h-[300px]"></div>
             </div>
-
-
         </div>
+    </main>
 
-
-
-
-
-        <!-- OUTPUT -->
-
-        <div class="flex flex-col editor-container">
-
-
-            <div class="bg-gray-50 dark:bg-gray-800 px-4 py-2 border-b border-gray-200 dark:border-gray-700">
-
-                YAML Output (Parsed)
-
-            </div>
-
-
-            <div id="editor-output"
-                 class="flex-grow">
-            </div>
-
-
-        </div>
-
-
-
-    </div>
-
-
-
-
-
-
-    <!-- SEO CONTENT -->
-
-    <section class="mt-10 space-y-6">
-
-
-
-
-
-        <div class="seo-card p-6">
-
-
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-
-                What is a YAML Validator?
-
-            </h2>
-
-
-            <p class="text-gray-600 dark:text-gray-400 leading-7">
-
-
-                A YAML Validator is an online developer tool that checks whether YAML files are correctly formatted.
-
-                YAML is widely used in Kubernetes,
-                Docker Compose,
-                GitHub Actions,
-                CI/CD pipelines and application configuration files.
-
-
-            </p>
-
-
-        </div>
-
-
-
-
-
-
-
-
-        <div class="seo-card p-6">
-
-
-            <h2 class="text-xl font-bold mb-5">
-
-                How to Validate YAML Online?
-
-            </h2>
-
-
-
-            <div class="grid md:grid-cols-3 gap-4">
-
-
-                <div class="border rounded-lg p-4 dark:border-gray-700">
-
-                    <b>1. Paste YAML</b>
-
-                    <p class="text-sm text-gray-500 mt-2">
-
-                        Insert your YAML configuration into the editor.
-
-                    </p>
-
-                </div>
-
-
-
-                <div class="border rounded-lg p-4 dark:border-gray-700">
-
-                    <b>2. Validate</b>
-
-                    <p class="text-sm text-gray-500 mt-2">
-
-                        Click Format & Validate to check syntax.
-
-                    </p>
-
-                </div>
-
-
-
-                <div class="border rounded-lg p-4 dark:border-gray-700">
-
-                    <b>3. Review Result</b>
-
-                    <p class="text-sm text-gray-500 mt-2">
-
-                        View errors and parsed JSON output.
-
-                    </p>
-
-                </div>
-
-
-
-            </div>
-
-        </div>
-
-
-
-
-
-
-
-
-        <div class="seo-card p-6">
-
-
-            <h2 class="text-xl font-bold mb-4">
-
-                YAML Validation Example
-
-            </h2>
-
-
-
-            <h3 class="text-green-600 font-semibold mb-2">
-
-                ✓ Valid YAML
-
-            </h3>
-
-
-            <pre class="bg-gray-900 text-gray-200 rounded-lg p-4 text-sm">
-
-app:
-  name: demo
-  port: 8080
-
-database:
-  host: localhost
-
-</pre>
-
-
-
-
-            <h3 class="text-red-600 font-semibold mt-6 mb-2">
-
-                ✗ Invalid YAML
-
-            </h3>
-
-
-            <pre class="bg-gray-900 text-gray-200 rounded-lg p-4 text-sm">
-
-app:
- name demo
- port 8080
-
-</pre>
-
-
-
-        </div>
-
-
-
-
-
-
-
-
-
-        <div class="seo-card p-6">
-
-
-            <h2 class="text-xl font-bold mb-4">
-
-                Why Use This YAML Validator?
-
-            </h2>
-
-
-            <div class="grid md:grid-cols-3 gap-4">
-
-
-                <div>
-                    🚀
-                    <b>Fast Validation</b>
-                    <p class="text-sm text-gray-500">
-                        Instant YAML syntax checking.
-                    </p>
-                </div>
-
-
-
-                <div>
-                    🔒
-                    <b>Privacy First</b>
-                    <p class="text-sm text-gray-500">
-                        Your YAML stays in browser.
-                    </p>
-                </div>
-
-
-
-                <div>
-                    ⚡
-                    <b>No Installation</b>
-                    <p class="text-sm text-gray-500">
-                        Works directly online.
-                    </p>
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-
-
-
-
-
-
-
-
-        <div class="seo-card p-6">
-
-
-            <h2 class="text-xl font-bold mb-4">
-
-                Frequently Asked Questions
-
-            </h2>
-
-
-
-            <div class="space-y-5">
-
-
-                <div>
-
-                    <b>
-                        How do I check if YAML is valid?
-                    </b>
-
-
-                    <p class="text-gray-500 mt-2">
-
-                        Paste YAML content and click Validate.
-                        The tool automatically detects syntax errors.
-
-                    </p>
-
-                </div>
-
-
-
-
-                <div>
-
-                    <b>
-                        Is this YAML Validator free?
-                    </b>
-
-
-                    <p class="text-gray-500 mt-2">
-
-                        Yes. It is completely free and runs in your browser.
-
-                    </p>
-
-                </div>
-
-
-
-
-
-                <div>
-
-                    <b>
-                        Does this tool store my YAML data?
-                    </b>
-
-
-                    <p class="text-gray-500 mt-2">
-
-                        No. YAML parsing happens locally and your data is not uploaded.
-
-                    </p>
-
-                </div>
-
-
-
-            </div>
-
-
-        </div>
-
-
-
-
-
-    </section>
-
-
-</main>
-
-
-
-
-<script src="js/tools/yaml.js"></script>
-
-
-<script>
-    lucide.createIcons();
-</script>
-
-
+    <script src="js/tools/yaml.js"></script>
 </body>
 </html>
