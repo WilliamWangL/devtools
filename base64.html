@@ -39,12 +39,12 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-4 py-6 flex flex-col max-w-5xl min-h-[calc(100vh-4rem)]">
+    <main class="flex-grow container mx-auto px-4 py-6 flex flex-col max-w-6xl min-h-[calc(100vh-4rem)]">
         <p class="text-sm text-gray-500 dark:text-gray-400 mb-3" data-i18n="base64.page.desc">Encode text to Base64 or decode Base64 back to plain text.</p>
         <div class="flex flex-col gap-6 h-full pb-8">
             <div class="flex-1 flex flex-col">
                 <label for="input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Input</label>
-                <textarea id="input" class="w-full flex-1 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-shadow outline-none resize-none font-mono text-sm shadow-sm" placeholder="Type or paste text here..." data-i18n="base64.input"></textarea>
+                <textarea id="input" class="w-full flex-1 min-h-[400px] p-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-shadow outline-none resize-none font-mono text-sm shadow-sm" placeholder="Type or paste text here..." data-i18n="base64.input"></textarea>
             </div>
 
             <div class="flex flex-wrap items-center justify-center gap-4">
@@ -64,7 +64,7 @@
 
             <div class="flex-1 flex flex-col relative group">
                 <label for="output" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Output</label>
-                <textarea id="output" readonly class="w-full flex-1 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl outline-none resize-none font-mono text-sm shadow-sm text-gray-900 dark:text-gray-100"></textarea>
+                <textarea id="output" readonly class="w-full flex-1 min-h-[400px] p-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl outline-none resize-none font-mono text-sm shadow-sm text-gray-900 dark:text-gray-100"></textarea>
                 
                 <button onclick="copyOutput()" class="absolute top-10 right-4 p-2 bg-white dark:bg-gray-700 shadow border border-gray-200 dark:border-gray-600 rounded-lg text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-all opacity-0 group-hover:opacity-100" title="Copy Output">
                     <i data-lucide="copy" class="w-4 h-4"></i>
